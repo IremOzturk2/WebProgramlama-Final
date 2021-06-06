@@ -1,0 +1,478 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="FATURA">
+          <Key>
+            <PropertyRef Name="FaturaNo" />
+          </Key>
+          <Property Name="FaturaNo" Type="int" Nullable="false" />
+          <Property Name="SiparisNo" Type="int" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'Diyetisyen Uygulaması.dbo.Giris' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="Giris">
+          <Property Name="Ad" Type="nvarchar(max)" />
+          <Property Name="Sifre" Type="nvarchar(max)" />
+        </EntityType>-->
+        <EntityType Name="KATEGORI">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="int" Nullable="false" />
+          <Property Name="KategoriAdi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MUSTERI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kimlik No" Type="nvarchar(max)" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Soyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar(max)" />
+          <Property Name="E-Posta" Type="nvarchar(max)" />
+          <Property Name="Cinsiyet" Type="nchar" MaxLength="10" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tekrar_Sifre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RANDEVU">
+          <Key>
+            <PropertyRef Name="RandevuID" />
+          </Key>
+          <Property Name="RandevuID" Type="int" Nullable="false" />
+          <Property Name="MusteriID" Type="int" />
+          <Property Name="SiparisID" Type="int" />
+        </EntityType>
+        <EntityType Name="SIPARIS">
+          <Key>
+            <PropertyRef Name="SiparisNo" />
+          </Key>
+          <Property Name="SiparisNo" Type="int" Nullable="false" />
+          <Property Name="SiparisTarihi" Type="datetime" />
+          <Property Name="ToplamTutar" Type="money" />
+          <Property Name="UrunID" Type="int" />
+          <Property Name="MusteriNo" Type="int" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="SiparisDurum" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="URUN">
+          <Key>
+            <PropertyRef Name="UrunID" />
+          </Key>
+          <Property Name="UrunID" Type="int" Nullable="false" />
+          <Property Name="UrunAdi" Type="nvarchar(max)" />
+          <Property Name="UrunFiyati" Type="money" />
+          <Property Name="KategoriID" Type="int" />
+        </EntityType>
+        <Association Name="FK_FATURA_SIPARIS">
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="0..1" />
+          <End Role="FATURA" Type="Self.FATURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SIPARIS">
+              <PropertyRef Name="SiparisNo" />
+            </Principal>
+            <Dependent Role="FATURA">
+              <PropertyRef Name="SiparisNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RANDEVU_MUSTERI">
+          <End Role="MUSTERI" Type="Self.MUSTERI" Multiplicity="0..1" />
+          <End Role="RANDEVU" Type="Self.RANDEVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RANDEVU">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RANDEVU_SIPARIS">
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="0..1" />
+          <End Role="RANDEVU" Type="Self.RANDEVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SIPARIS">
+              <PropertyRef Name="SiparisNo" />
+            </Principal>
+            <Dependent Role="RANDEVU">
+              <PropertyRef Name="SiparisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SIPARIS_MUSTERI">
+          <End Role="MUSTERI" Type="Self.MUSTERI" Multiplicity="0..1" />
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SIPARIS">
+              <PropertyRef Name="MusteriNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SIPARIS_URUN">
+          <End Role="URUN" Type="Self.URUN" Multiplicity="0..1" />
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="URUN">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="SIPARIS">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_URUN_KATEGORI">
+          <End Role="KATEGORI" Type="Self.KATEGORI" Multiplicity="0..1" />
+          <End Role="URUN" Type="Self.URUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KATEGORI">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="URUN">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="FATURA" EntityType="Self.FATURA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KATEGORI" EntityType="Self.KATEGORI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MUSTERI" EntityType="Self.MUSTERI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RANDEVU" EntityType="Self.RANDEVU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SIPARIS" EntityType="Self.SIPARIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="URUN" EntityType="Self.URUN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FATURA_SIPARIS" Association="Self.FK_FATURA_SIPARIS">
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+            <End Role="FATURA" EntitySet="FATURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RANDEVU_MUSTERI" Association="Self.FK_RANDEVU_MUSTERI">
+            <End Role="MUSTERI" EntitySet="MUSTERI" />
+            <End Role="RANDEVU" EntitySet="RANDEVU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RANDEVU_SIPARIS" Association="Self.FK_RANDEVU_SIPARIS">
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+            <End Role="RANDEVU" EntitySet="RANDEVU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SIPARIS_MUSTERI" Association="Self.FK_SIPARIS_MUSTERI">
+            <End Role="MUSTERI" EntitySet="MUSTERI" />
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SIPARIS_URUN" Association="Self.FK_SIPARIS_URUN">
+            <End Role="URUN" EntitySet="URUN" />
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_URUN_KATEGORI" Association="Self.FK_URUN_KATEGORI">
+            <End Role="KATEGORI" EntitySet="KATEGORI" />
+            <End Role="URUN" EntitySet="URUN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="FATURA">
+          <Key>
+            <PropertyRef Name="FaturaNo" />
+          </Key>
+          <Property Name="FaturaNo" Type="Int32" Nullable="false" />
+          <Property Name="SiparisNo" Type="Int32" />
+          <NavigationProperty Name="SIPARIS" Relationship="Self.FK_FATURA_SIPARIS" FromRole="FATURA" ToRole="SIPARIS" />
+        </EntityType>
+        <EntityType Name="KATEGORI">
+          <Key>
+            <PropertyRef Name="KategoriID" />
+          </Key>
+          <Property Name="KategoriID" Type="Int32" Nullable="false" />
+          <Property Name="KategoriAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="URUN" Relationship="Self.FK_URUN_KATEGORI" FromRole="KATEGORI" ToRole="URUN" />
+        </EntityType>
+        <EntityType Name="MUSTERI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kimlik_No" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Soyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="E_Posta" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Cinsiyet" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tekrar_Sifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RANDEVU" Relationship="Self.FK_RANDEVU_MUSTERI" FromRole="MUSTERI" ToRole="RANDEVU" />
+          <NavigationProperty Name="SIPARIS" Relationship="Self.FK_SIPARIS_MUSTERI" FromRole="MUSTERI" ToRole="SIPARIS" />
+        </EntityType>
+        <EntityType Name="RANDEVU">
+          <Key>
+            <PropertyRef Name="RandevuID" />
+          </Key>
+          <Property Name="RandevuID" Type="Int32" Nullable="false" />
+          <Property Name="MusteriID" Type="Int32" />
+          <Property Name="SiparisID" Type="Int32" />
+          <NavigationProperty Name="MUSTERI" Relationship="Self.FK_RANDEVU_MUSTERI" FromRole="RANDEVU" ToRole="MUSTERI" />
+          <NavigationProperty Name="SIPARIS" Relationship="Self.FK_RANDEVU_SIPARIS" FromRole="RANDEVU" ToRole="SIPARIS" />
+        </EntityType>
+        <EntityType Name="SIPARIS">
+          <Key>
+            <PropertyRef Name="SiparisNo" />
+          </Key>
+          <Property Name="SiparisNo" Type="Int32" Nullable="false" />
+          <Property Name="SiparisTarihi" Type="DateTime" Precision="3" />
+          <Property Name="ToplamTutar" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="UrunID" Type="Int32" />
+          <Property Name="MusteriNo" Type="Int32" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="SiparisDurum" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="FATURA" Relationship="Self.FK_FATURA_SIPARIS" FromRole="SIPARIS" ToRole="FATURA" />
+          <NavigationProperty Name="MUSTERI" Relationship="Self.FK_SIPARIS_MUSTERI" FromRole="SIPARIS" ToRole="MUSTERI" />
+          <NavigationProperty Name="RANDEVU" Relationship="Self.FK_RANDEVU_SIPARIS" FromRole="SIPARIS" ToRole="RANDEVU" />
+          <NavigationProperty Name="URUN" Relationship="Self.FK_SIPARIS_URUN" FromRole="SIPARIS" ToRole="URUN" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="URUN">
+          <Key>
+            <PropertyRef Name="UrunID" />
+          </Key>
+          <Property Name="UrunID" Type="Int32" Nullable="false" />
+          <Property Name="UrunAdi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UrunFiyati" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="KategoriID" Type="Int32" />
+          <NavigationProperty Name="KATEGORI" Relationship="Self.FK_URUN_KATEGORI" FromRole="URUN" ToRole="KATEGORI" />
+          <NavigationProperty Name="SIPARIS" Relationship="Self.FK_SIPARIS_URUN" FromRole="URUN" ToRole="SIPARIS" />
+        </EntityType>
+        <Association Name="FK_FATURA_SIPARIS">
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="0..1" />
+          <End Role="FATURA" Type="Self.FATURA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SIPARIS">
+              <PropertyRef Name="SiparisNo" />
+            </Principal>
+            <Dependent Role="FATURA">
+              <PropertyRef Name="SiparisNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_URUN_KATEGORI">
+          <End Role="KATEGORI" Type="Self.KATEGORI" Multiplicity="0..1" />
+          <End Role="URUN" Type="Self.URUN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KATEGORI">
+              <PropertyRef Name="KategoriID" />
+            </Principal>
+            <Dependent Role="URUN">
+              <PropertyRef Name="KategoriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RANDEVU_MUSTERI">
+          <End Role="MUSTERI" Type="Self.MUSTERI" Multiplicity="0..1" />
+          <End Role="RANDEVU" Type="Self.RANDEVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RANDEVU">
+              <PropertyRef Name="MusteriID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SIPARIS_MUSTERI">
+          <End Role="MUSTERI" Type="Self.MUSTERI" Multiplicity="0..1" />
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUSTERI">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SIPARIS">
+              <PropertyRef Name="MusteriNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RANDEVU_SIPARIS">
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="0..1" />
+          <End Role="RANDEVU" Type="Self.RANDEVU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SIPARIS">
+              <PropertyRef Name="SiparisNo" />
+            </Principal>
+            <Dependent Role="RANDEVU">
+              <PropertyRef Name="SiparisID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SIPARIS_URUN">
+          <End Role="URUN" Type="Self.URUN" Multiplicity="0..1" />
+          <End Role="SIPARIS" Type="Self.SIPARIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="URUN">
+              <PropertyRef Name="UrunID" />
+            </Principal>
+            <Dependent Role="SIPARIS">
+              <PropertyRef Name="UrunID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Diyetisyen_UygulamasıEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="FATURA" EntityType="Self.FATURA" />
+          <EntitySet Name="KATEGORI" EntityType="Self.KATEGORI" />
+          <EntitySet Name="MUSTERI" EntityType="Self.MUSTERI" />
+          <EntitySet Name="RANDEVU" EntityType="Self.RANDEVU" />
+          <EntitySet Name="SIPARIS" EntityType="Self.SIPARIS" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="URUN" EntityType="Self.URUN" />
+          <AssociationSet Name="FK_FATURA_SIPARIS" Association="Self.FK_FATURA_SIPARIS">
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+            <End Role="FATURA" EntitySet="FATURA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_URUN_KATEGORI" Association="Self.FK_URUN_KATEGORI">
+            <End Role="KATEGORI" EntitySet="KATEGORI" />
+            <End Role="URUN" EntitySet="URUN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RANDEVU_MUSTERI" Association="Self.FK_RANDEVU_MUSTERI">
+            <End Role="MUSTERI" EntitySet="MUSTERI" />
+            <End Role="RANDEVU" EntitySet="RANDEVU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SIPARIS_MUSTERI" Association="Self.FK_SIPARIS_MUSTERI">
+            <End Role="MUSTERI" EntitySet="MUSTERI" />
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RANDEVU_SIPARIS" Association="Self.FK_RANDEVU_SIPARIS">
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+            <End Role="RANDEVU" EntitySet="RANDEVU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SIPARIS_URUN" Association="Self.FK_SIPARIS_URUN">
+            <End Role="URUN" EntitySet="URUN" />
+            <End Role="SIPARIS" EntitySet="SIPARIS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Diyetisyen_UygulamasıEntities">
+          <EntitySetMapping Name="FATURA">
+            <EntityTypeMapping TypeName="Model.FATURA">
+              <MappingFragment StoreEntitySet="FATURA">
+                <ScalarProperty Name="FaturaNo" ColumnName="FaturaNo" />
+                <ScalarProperty Name="SiparisNo" ColumnName="SiparisNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KATEGORI">
+            <EntityTypeMapping TypeName="Model.KATEGORI">
+              <MappingFragment StoreEntitySet="KATEGORI">
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+                <ScalarProperty Name="KategoriAdi" ColumnName="KategoriAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MUSTERI">
+            <EntityTypeMapping TypeName="Model.MUSTERI">
+              <MappingFragment StoreEntitySet="MUSTERI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Kimlik_No" ColumnName="Kimlik No" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="E_Posta" ColumnName="E-Posta" />
+                <ScalarProperty Name="Cinsiyet" ColumnName="Cinsiyet" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="Tekrar_Sifre" ColumnName="Tekrar_Sifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RANDEVU">
+            <EntityTypeMapping TypeName="Model.RANDEVU">
+              <MappingFragment StoreEntitySet="RANDEVU">
+                <ScalarProperty Name="RandevuID" ColumnName="RandevuID" />
+                <ScalarProperty Name="MusteriID" ColumnName="MusteriID" />
+                <ScalarProperty Name="SiparisID" ColumnName="SiparisID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SIPARIS">
+            <EntityTypeMapping TypeName="Model.SIPARIS">
+              <MappingFragment StoreEntitySet="SIPARIS">
+                <ScalarProperty Name="SiparisNo" ColumnName="SiparisNo" />
+                <ScalarProperty Name="SiparisTarihi" ColumnName="SiparisTarihi" />
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+                <ScalarProperty Name="MusteriNo" ColumnName="MusteriNo" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="SiparisDurum" ColumnName="SiparisDurum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="URUN">
+            <EntityTypeMapping TypeName="Model.URUN">
+              <MappingFragment StoreEntitySet="URUN">
+                <ScalarProperty Name="UrunID" ColumnName="UrunID" />
+                <ScalarProperty Name="UrunAdi" ColumnName="UrunAdi" />
+                <ScalarProperty Name="UrunFiyati" ColumnName="UrunFiyati" />
+                <ScalarProperty Name="KategoriID" ColumnName="KategoriID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

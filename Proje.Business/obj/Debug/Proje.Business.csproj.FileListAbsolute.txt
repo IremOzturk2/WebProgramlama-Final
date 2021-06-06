@@ -1,0 +1,15 @@
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.Business.dll.config
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.Business.dll
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.Business.pdb
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\EntityFramework.dll
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.DataAccess.dll
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.DataAccess.pdb
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\Proje.DataAccess.dll.config
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\EntityFramework.xml
+D:\Projeler\WebProgramlama\Proje.Business\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projeler\WebProgramlama\Proje.Business\obj\Debug\Proje.Business.csprojAssemblyReference.cache
+D:\Projeler\WebProgramlama\Proje.Business\obj\Debug\Proje.Business.csproj.CoreCompileInputs.cache
+D:\Projeler\WebProgramlama\Proje.Business\obj\Debug\Proje.Business.csproj.CopyComplete
+D:\Projeler\WebProgramlama\Proje.Business\obj\Debug\Proje.Business.dll
+D:\Projeler\WebProgramlama\Proje.Business\obj\Debug\Proje.Business.pdb

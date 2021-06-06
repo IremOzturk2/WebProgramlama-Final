@@ -1,0 +1,12 @@
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\Proje.DataAccess.dll
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\Proje.DataAccess.pdb
+D:\Projeler\WebProgramlama\Proje.DataAccess\obj\Debug\Proje.DataAccess.csprojAssemblyReference.cache
+D:\Projeler\WebProgramlama\Proje.DataAccess\obj\Debug\Proje.DataAccess.csproj.CoreCompileInputs.cache
+D:\Projeler\WebProgramlama\Proje.DataAccess\obj\Debug\Proje.DataAccess.dll
+D:\Projeler\WebProgramlama\Proje.DataAccess\obj\Debug\Proje.DataAccess.pdb
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\Proje.DataAccess.dll.config
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\EntityFramework.dll
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\EntityFramework.xml
+D:\Projeler\WebProgramlama\Proje.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
+D:\Projeler\WebProgramlama\Proje.DataAccess\obj\Debug\Proje.DataAccess.csproj.CopyComplete
